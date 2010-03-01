@@ -171,7 +171,8 @@ class jsonRPCClient {
                 die('Request error: '.$response['error']);
             }
 
-			return JSON_RPC_Parser::decode($response['result']);
+            $response = JSON_RPC_Parser::decode($response['rawdata']); 
+            return $response['result'];
 
 		} else {
 			return true;
@@ -185,7 +186,7 @@ class jsonRPCClient {
         foreach($headers as $value){
             $header = explode(": ",$value);
             if($header[0] && !$header[1]){
-                $headerdata['result'] = $header[0];
+                $headerdata['rawdata'] = $header[0];
             }
             elseif($header[0] && $header[1]){
                 $headerdata[$header[0]] = $header[1];
