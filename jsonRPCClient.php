@@ -78,7 +78,6 @@ class jsonRPCClient {
 	function jsonRPCClient($url,$debug = false) {
 		// server URL
         $this->url = parse_url($url);
-
 		// proxy
 		empty($proxy) ? $this->proxy = '' : $this->proxy = $proxy;
 		// debug state
@@ -110,7 +109,7 @@ class jsonRPCClient {
 
 		// check
 		if (!is_scalar($method)) {
-			throw new Exception('Method name has no scalar value');
+            die('Method name has no scalar value');
 		}
 
 		// check
@@ -118,7 +117,7 @@ class jsonRPCClient {
 			// no keys
 			$params = array_values($params);
 		} else {
-			throw new Exception('Params must be given as array');
+            die('Params must be given as array');
 		}
 
 		// sets notification or request task
@@ -166,10 +165,10 @@ class jsonRPCClient {
 		if (!$this->notification) {
 			// check
             //if ($response['id'] != $currentId) {
-                //throw new Exception('Incorrect response id (request id: '.$currentId.', response id: '.$response['id'].')');
+                //die('Incorrect response id (request id: '.$currentId.', response id: '.$response['id'].')');
             //}
             if (!is_null($response['error'])) {
-                throw new Exception('Request error: '.$response['error']);
+                die('Request error: '.$response['error']);
             }
 
 			return JSON_RPC_Parser::decode($response['result']);
